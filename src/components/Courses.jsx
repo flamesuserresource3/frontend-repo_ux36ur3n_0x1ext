@@ -1,94 +1,36 @@
-import { BookOpen, Clock, CheckCircle2 } from 'lucide-react';
+import React from 'react';
+import { BookOpen, CheckCircle2 } from 'lucide-react';
 
 const modules = [
-  {
-    id: 'pengantar-rpl',
-    title: 'Pengantar Rekayasa Perangkat Lunak',
-    duration: '6 jam',
-    desc: 'Konsep dasar RPL, SDLC, requirement, dan kualitas perangkat lunak.',
-    projects: ['Dokumen Requirement Sederhana', 'Studi Kasus SDLC']
-  },
-  {
-    id: 'algoritma',
-    title: 'Algoritma & Struktur Data',
-    duration: '10 jam',
-    desc: 'Pemrograman dasar, kompleksitas, array, stack, queue, tree, graph.',
-    projects: ['Mini Library System', 'Visualizer Sorting']
-  },
-  {
-    id: 'oop',
-    title: 'Pemrograman Berorientasi Objek (OOP)',
-    duration: '8 jam',
-    desc: 'Class, object, inheritance, polymorphism, SOLID principles.',
-    projects: ['Aplikasi Rental Sederhana', 'Design Pattern Dasar']
-  },
-  {
-    id: 'web',
-    title: 'Pengembangan Web',
-    duration: '12 jam',
-    desc: 'HTML, CSS, JS, REST API, autentikasi, dan deployment dasar.',
-    projects: ['Landing Page Responsif', 'CRUD App']
-  },
-  {
-    id: 'ai',
-    title: 'AI & Machine Learning Dasar',
-    duration: '10 jam',
-    desc: 'Pembelajaran mesin, model dasar, evaluasi, dan etika AI.',
-    projects: ['Klasifikasi Dataset Sederhana', 'ML Pipeline Dasar']
-  },
-  {
-    id: 'database',
-    title: 'Basis Data',
-    duration: '8 jam',
-    desc: 'Model data, ERD, SQL/NoSQL, normalisasi, indexing, dan transaksi.',
-    projects: ['Desain ERD Proyek', 'Query Optimization']
-  }
+  { id: '01', title: 'Pemrograman Dasar', desc: 'Variabel, tipe data, kontrol alur, dan struktur data.', level: 'Dasar' },
+  { id: '02', title: 'Pemrograman Berorientasi Objek', desc: 'Class, objek, inheritance, polymorphism, encapsulation.', level: 'Menengah' },
+  { id: '03', title: 'Basis Data & SQL', desc: 'Relasional, normalisasi, query dasar hingga lanjutan.', level: 'Menengah' },
+  { id: '04', title: 'Pengembangan Web', desc: 'HTML, CSS, JavaScript, React, dan integrasi API.', level: 'Lanjutan' },
 ];
 
-function CourseCard({ m }) {
+const Courses = React.forwardRef(function Courses(_, ref) {
   return (
-    <div className="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-lg transition">
-      <div className="flex items-start justify-between">
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-indigo-50 text-indigo-600"><BookOpen className="w-6 h-6" /></div>
-          <h3 className="text-lg font-bold text-gray-900">{m.title}</h3>
-        </div>
-        <div className="flex items-center gap-1 text-sm text-gray-500">
-          <Clock className="w-4 h-4" /> {m.duration}
-        </div>
+    <section ref={ref} className="relative mx-auto max-w-6xl px-4 py-16">
+      <div className="mb-8 flex items-center gap-2 text-indigo-400">
+        <BookOpen size={20} />
+        <h2 className="text-xl font-semibold">Modul RPL</h2>
       </div>
-      <p className="mt-3 text-gray-600">{m.desc}</p>
-      <div className="mt-4">
-        <p className="text-sm font-semibold text-gray-700">Proyek setelah modul:</p>
-        <ul className="mt-2 space-y-1 text-sm text-gray-600">
-          {m.projects.map((p, i) => (
-            <li key={i} className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> {p}</li>
-          ))}
-        </ul>
-      </div>
-      <div className="mt-5">
-        <button className="w-full px-4 py-2 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition">Mulai Belajar</button>
-      </div>
-    </div>
-  );
-}
 
-export default function Courses({ innerRef }) {
-  return (
-    <section ref={innerRef} className="relative py-16 bg-gradient-to-b from-white to-indigo-50/40">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-end justify-between mb-8">
-          <div>
-            <h2 className="text-3xl font-extrabold text-gray-900">Modul Kurikulum RPL</h2>
-            <p className="text-gray-600 mt-2">Semua materi disusun dari fundamental hingga siap industri.</p>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        {modules.map((m) => (
+          <div key={m.id} className="group rounded-xl border border-slate-200/10 bg-white/5 p-5 text-white shadow-sm backdrop-blur transition hover:bg-white/10">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-xs uppercase tracking-wide text-slate-300">{m.level}</span>
+              <CheckCircle2 className="opacity-0 transition group-hover:opacity-100 text-emerald-400" size={18} />
+            </div>
+            <h3 className="text-lg font-semibold">{m.title}</h3>
+            <p className="mt-2 text-sm text-slate-300">{m.desc}</p>
+            <button className="mt-4 inline-flex rounded-md bg-indigo-500 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-400">Lihat Silabus</button>
           </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {modules.map((m) => (
-            <CourseCard key={m.id} m={m} />
-          ))}
-        </div>
+        ))}
       </div>
     </section>
   );
-}
+});
+
+export default Courses;
